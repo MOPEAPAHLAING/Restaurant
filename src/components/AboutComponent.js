@@ -20,46 +20,35 @@ function RenderLeader({leader}) {
     );
 }
 
-function About() {
+function About(props) {
 
-    // const leaders = props.leaders.map((leader) => {
-    //     return(
-    //         <div key={leader.id}>
-    //             <RenderLeader leader={leader} />
-    //         </div>
-    //     )
-    // })
-    function RenderContent({leaders, isLoading, errMess}){
-        if(isLoading) {
-            return(
-                <div className="container">
-                    <div className="row">
-                        <Loading />
-                    </div>
+    const leaders = props.leaders.map((leader) => {
+        return(
+            <div key={leader.id}>
+                <RenderLeader leader={leader} />
+            </div>
+        )
+    })
+
+    if(props.isLoading) {
+        return(
+            <div className="container">
+                <div className="row">
+                    <Loading />
                 </div>
-            );
-        }
-        else if(errMess) {
-            return(
-                <div className="container">
-                    <div className="row">
-                        <h4>{errMess}</h4>
-                    </div>
-                </div>
-            );
-        }
-        else
-            return(
-                <Stagger in>
-                    {leaders.map((leader) => (
-                        <Fade in key={leader.id}>
-                            <RenderLeader leader={leader}></RenderLeader>
-                        </Fade>
-                    ))}
-                </Stagger>  
-            );
+            </div>
+        );
     }
-         
+    else if(props.errMess) {
+        return(
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if(props.leader != null)        
         return(
             <div className="container">
                 <div className="row">
@@ -118,7 +107,7 @@ function About() {
                             <div className="col-12">
                                 <Media list>
                                     <Fade in>
-                                        <RenderContent leaders={PaymentResponse.leaders} isLoading={PaymentResponse.isLoading} errMess={PaymentResponse.errMess} />
+                                        {leaders}
                                     </Fade>
                                 </Media>
                             </div>
